@@ -123,14 +123,22 @@ class TodoList
     self
   end
 
-  def select
-    results = TodoList.new("New list")
+  def select(title)
+    results = TodoList.new(title)
 
     each do |todo|
       results << todo if yield(todo)
     end
 
     results
+  end
+
+  def find_by_title(title)
+    each do |todo|
+      return todo if todo.title == title
+    end
+
+    nil
   end
 end
 
@@ -237,8 +245,5 @@ list.add(todo1)
 list.add(todo2)
 list.add(todo3)
 
-list.mark_done_at(0)
-
-results = list.select { |todo| todo.done? }
-
-puts results.inspect
+p list.find_by_title("Buy milk")
+p list.find_by_title("none")
