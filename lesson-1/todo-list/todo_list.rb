@@ -87,11 +87,11 @@ class TodoList
   end
 
   def mark_done_at(idx)
-    @todos.item_at(idx).done!
+    self.item_at(idx).done!
   end
 
   def mark_undone_at(idx)
-    @todos.item_at(idx).undone!
+    self.item_at(idx).undone!
   end
 
   def remove_at(idx)
@@ -117,7 +117,14 @@ class TodoList
     todo_list << @todos.map(&:to_s).join("\n")
     todo_list 
   end
+
+  def each
+    @todos.each { |todo| yield(todo) }
+    self
+  end
 end
+
+=begin
 
 # Example Usage:
 
@@ -127,7 +134,6 @@ todo2 = Todo.new("Clean room")
 todo3 = Todo.new("Go to gym")
 list = TodoList.new("Today's Todos")
 
-binding.pry
 # ---- Adding to the list -----
 
 # add
@@ -207,3 +213,22 @@ list.to_s                      # returns string representation of the list
 # [ ] Buy milk
 # [X] Clean room
 # [ ] Go to gym
+
+=end
+
+# Example of TodoList#each usage:
+
+todo1 = Todo.new("Buy milk")
+todo2 = Todo.new("Clean room")
+todo3 = Todo.new("Go to gym")
+
+list = TodoList.new("Today's Todos")
+list.add(todo1)
+list.add(todo2)
+list.add(todo3)
+
+list.mark_done_at(1)
+
+list.each do |todo|
+  puts todo                   # calls Todo#to_s
+end
