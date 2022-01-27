@@ -140,6 +140,30 @@ class TodoList
 
     nil
   end
+
+  def all_done
+    select { |todo| todo.done? }
+  end
+
+  def all_not_done
+    select { |todo| !todo.done? }
+  end
+
+  def mark_done(title)
+    find_by_title(title) && find_by_title(title).done!
+  end
+
+  def mark_all_done
+    each do |todo|
+      todo.done!
+    end
+  end
+
+  def mark_all_undone
+    each do |todo|
+      todo.undone!
+    end
+  end
 end
 
 =begin
@@ -245,5 +269,6 @@ list.add(todo1)
 list.add(todo2)
 list.add(todo3)
 
-p list.find_by_title("Buy milk")
-p list.find_by_title("none")
+list.mark_done_at(1)
+
+p list.all_not_done
