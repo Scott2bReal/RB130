@@ -124,7 +124,13 @@ class TodoList
   end
 
   def select
-    @todos.select { |todo| yield(todo) }
+    results = TodoList.new("New list")
+
+    each do |todo|
+      results << todo if yield(todo)
+    end
+
+    results
   end
 end
 
