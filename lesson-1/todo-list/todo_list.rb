@@ -122,6 +122,10 @@ class TodoList
     @todos.each { |todo| yield(todo) }
     self
   end
+
+  def select
+    @todos.select { |todo| yield(todo) }
+  end
 end
 
 =begin
@@ -227,8 +231,8 @@ list.add(todo1)
 list.add(todo2)
 list.add(todo3)
 
-list.mark_done_at(1)
+list.mark_done_at(0)
 
-list.each do |todo|
-  puts todo                   # calls Todo#to_s
-end
+results = list.select { |todo| todo.done? }
+
+puts results.inspect
