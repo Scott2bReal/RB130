@@ -31,10 +31,10 @@ class Todo
     "[#{done? ? DONE_MARKER : UNDONE_MARKER}] #{title}"
   end
 
-  def ==(otherTodo)
-    title == otherTodo.title &&
-      description == otherTodo.description &&
-      done == otherTodo.done
+  def ==(other_todo)
+    title == other_todo.title &&
+      description == other_todo.description &&
+      done == other_todo.done
   end
 end
 
@@ -51,17 +51,17 @@ class TodoList
   end
 
   def add(todo)
-    if todo.is_a?(Todo)
-      @todos.push(todo)
-    else
-      raise(TypeError, "Can only add Todo objects")
-    end
+    raise(TypeError, "Can only add Todo objects") unless todo.is_a?(Todo)
+
+    @todos.push(todo)
   end
 
-  def <<(todo)
-    add(todo)
-  end
-   
+  alias << add
+
+  # def <<(todo)
+  #   add(todo)
+  # end
+
   def size
     @todos.size
   end
@@ -79,7 +79,7 @@ class TodoList
   end
 
   def done?
-    @todos.all? { |todo| todo.done? }
+    @todos.all?(&:done?)
   end
 
   def item_at(idx)
@@ -87,11 +87,11 @@ class TodoList
   end
 
   def mark_done_at(idx)
-    self.item_at(idx).done!
+    item_at(idx).done!
   end
 
   def mark_undone_at(idx)
-    self.item_at(idx).undone!
+    item_at(idx).undone!
   end
 
   def remove_at(idx)
@@ -99,9 +99,7 @@ class TodoList
   end
 
   def done!
-    @todos.each do |todo|
-      todo.done!
-    end
+    @todos.each(&:done!)
   end
 
   def shift
@@ -115,7 +113,7 @@ class TodoList
   def to_s
     todo_list = "---- #{title} ----"
     todo_list << @todos.map(&:to_s).join("\n")
-    todo_list 
+    todo_list
   end
 
   def each
@@ -123,7 +121,7 @@ class TodoList
     self
   end
 
-  def select(title)
+  def select(title="New Todo List")
     results = TodoList.new(title)
 
     each do |todo|
@@ -142,7 +140,7 @@ class TodoList
   end
 
   def all_done
-    select { |todo| todo.done? }
+    select(&:done?)
   end
 
   def all_not_done
@@ -150,19 +148,16 @@ class TodoList
   end
 
   def mark_done(title)
-    find_by_title(title) && find_by_title(title).done!
+    find_by_title(title)&.done!
+    # find_by_title(title) && find_by_title(title).done!
   end
 
   def mark_all_done
-    each do |todo|
-      todo.done!
-    end
+    each(&:done!)
   end
 
   def mark_all_undone
-    each do |todo|
-      todo.undone!
-    end
+    each(&:undone!)
   end
 end
 
