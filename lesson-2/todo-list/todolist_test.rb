@@ -1,13 +1,15 @@
+require 'simplecov'
+SimpleCov.start
+require 'minitest/reporters'
 require 'minitest/autorun'
-# require 'minitest/reporters'
-# Minitest::Reporters.use!
+Minitest::Reporters.use!
 
 require_relative 'todo_list'
 
 class TodoListTest < MiniTest::Test
   def setup
-    @todo1 = Todo.new("Buy Milk")
-    @todo2 = Todo.new("Clean Room")
+    @todo1 = Todo.new("Buy milk")
+    @todo2 = Todo.new("Clean room")
     @todo3 = Todo.new("Go to gym")
     @todos = [@todo1, @todo2, @todo3]
 
@@ -95,28 +97,125 @@ class TodoListTest < MiniTest::Test
   end
 
   def test_to_s
-    output = <<~OUTPUT.chomp
----- Today's Todos ----
-[ ] Buy milk
-[ ] Clean room
-[ ] Go to gym
-OUTPUT
+    output = <<~MSG.chomp
+    ---- Today's Todos ----
+    [ ] Buy milk
+    [ ] Clean room
+    [ ] Go to gym
+    MSG
 
     assert_equal(output, @list.to_s)
   end
 
-  # def test_to_s_one_done
-  # end
+  def test_to_s_one_done
+    output = <<~MSG.chomp
+    ---- Today's Todos ----
+    [X] Buy milk
+    [ ] Clean room
+    [ ] Go to gym
+    MSG
 
-  # def test_to_s_all_done
-  # end
+    @list.mark_done_at(0)
+    assert_equal(output, @list.to_s)
+  end
 
-  # def test_each
-  # end
+  def test_to_s_all_done
+    output = <<~MSG.chomp
+    ---- Today's Todos ----
+    [X] Buy milk
+    [X] Clean room
+    [X] Go to gym
+    MSG
 
-  # def test_each_returns_original_object
-  # end
+    @list.done!
+    assert_equal(output, @list.to_s)
+  end
 
-  # def select
-  # end
+  def test_each
+    test_array = []
+    @list.each { |todo| test_array << todo }
+    assert_equal([@todo1, @todo2, @todo3], test_array)
+  end
+
+  def test_each_returns_original_object
+    test_return = @list.each
+    assert_equal(@list, test_return)
+  end
+
+  def select
+    @todo1.done!
+    list = Todo.new(@list.title)
+    list << @todo1
+
+    assert_equal(list.title, @list.select(&:done?).title)
+    assert_equal(list.to_s, @list.select(&done?).to_s)
+  end
+
+  def test_find_by_title
+    test_todo = Todo.new("Buy milk")
+
+    assert_equal(test_todo, @list.find_by_title("Buy milk"))
+  end
+
+  def test_mark_done
+    output = <<~MSG.chomp
+        ---- Today's Todos ----
+        [X] Buy milk
+        [ ] Clean room
+        [ ] Go to gym
+        MSG
+
+    @list.mark_done("Buy milk")
+
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_all_done
+    output = <<~MSG.chomp
+    ---- Today's Todos ----
+    [X] Buy milk
+    [X] Clean room
+    [X] Go to gym
+    MSG
+
+    @list.done!
+
+    assert_equal(output, @list.all_done.to_s)
+  end
+
+  def test_all_not_done
+    output = <<~MSG.chomp
+    ---- Today's Todos ----
+    [ ] Buy milk
+    [ ] Clean room
+    [ ] Go to gym
+    MSG
+
+    assert_equal(output, @list.all_not_done.to_s)
+  end
+
+  def test_mark_all_done
+    output = <<~MSG.chomp
+    ---- Today's Todos ----
+    [X] Buy milk
+    [X] Clean room
+    [X] Go to gym
+    MSG
+
+    @list.mark_all_done
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_mark_all_undone
+    output = <<~MSG.chomp
+    ---- Today's Todos ----
+    [ ] Buy milk
+    [ ] Clean room
+    [ ] Go to gym
+    MSG
+
+    @list.done!
+    @list.mark_all_undone
+    assert_equal(output, @list.to_s)
+  end
 end

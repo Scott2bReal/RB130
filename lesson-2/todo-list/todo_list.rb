@@ -31,7 +31,7 @@ class Todo
     "[#{done? ? DONE_MARKER : UNDONE_MARKER}] #{title}"
   end
 
-def ==(other_todo)
+  def ==(other_todo)
     title == other_todo.title &&
       description == other_todo.description &&
       done == other_todo.done
@@ -117,11 +117,11 @@ class TodoList
   end
 
   def each
-    @todos.each { |todo| yield(todo) }
+    @todos.each { |todo| yield(todo) if block_given? }
     self
   end
 
-  def select(title="New Todo List")
+  def select(title=self.title)
     results = TodoList.new(title)
 
     each do |todo|
@@ -174,10 +174,10 @@ list = TodoList.new("Today's Todos")
 # ---- Adding to the list -----
 
 # add
-list.add(todo1)                 # adds todo1 to end of list, returns list
-list.add(todo2)                 # adds todo2 to end of list, returns list
-list.add(todo3)                 # adds todo3 to end of list, returns list
-list.add(1)                     # raises TypeError with message "Can only add Todo objects"
+list.add(todo1)      # adds todo1 to end of list, returns list
+list.add(todo2)      # adds todo2 to end of list, returns list
+list.add(todo3)      # adds todo3 to end of list, returns list
+list.add(1)          # raises TypeError with message "Can only add Todo objects"
 
 # <<
 # same behavior as add
@@ -185,19 +185,19 @@ list.add(1)                     # raises TypeError with message "Can only add To
 # ---- Interrogating the list -----
 
 # size
-list.size                       # returns 3
+list.size      # returns 3
 
 # first
-list.first                      # returns todo1, which is the first item in the list
+list.first     # returns todo1, which is the first item in the list
 
 # last
-list.last                       # returns todo3, which is the last item in the list
+list.last      # returns todo3, which is the last item in the list
 
 #to_a
-list.to_a                      # returns an array of all items in the list
+list.to_a      # returns an array of all items in the list
 
 #done?
-list.done?                     # returns true if all todos in the list are done, otherwise false
+list.done?     # returns true if all todos in the list are done, otherwise false
 
 # ---- Retrieving an item in the list ----
 
