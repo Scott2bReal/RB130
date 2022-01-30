@@ -11,12 +11,19 @@
 # must not use any other methods that iterate through an Array or any other
 # collection.
 
+# Algorithm:
+#   - For each item in array
+#     - break if idx = array.size - size
+#     - make a chunk of the array which starts at item and is size in size
+#
+require 'pry'
+
 def each_cons(array, size=2)
   array.each_with_index do |item, idx|
-    break if idx == (array.size - (size - 1))
-    yield(item, array[(idx + 1)..(idx + size)])
+    break if idx == (array.size - size)
+    chunk = [item, array[(idx + 1)..(idx + size)]]
+    p chunk
   end
-  nil
 end
 
 hash = {}
