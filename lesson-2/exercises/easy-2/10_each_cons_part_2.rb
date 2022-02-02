@@ -20,9 +20,17 @@ require 'pry'
 
 def each_cons(array, size=2)
   array.each_with_index do |item, idx|
-    break if idx == (array.size - size)
-    chunk = [item, array[(idx + 1)..(idx + size)]]
-    p chunk
+    break if size > array.size
+
+    case size
+    when 1 then yield(array[idx])
+    when 2
+      yield(item, array[idx + 1])
+    else
+      yield(item, *array[(idx + 1)..(idx + (size - 1))])
+    end
+
+    break if idx == array.size - size
   end
 end
 
