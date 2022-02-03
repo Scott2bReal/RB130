@@ -14,11 +14,11 @@ lambdas.
 =end
 
 # Group 1
-# my_proc = proc { |thing| puts "This is a #{thing}." }
-# puts my_proc
-# puts my_proc.class
-# my_proc.call
-# my_proc.call('cat')
+# my_proc = proc { |thing| puts "This is a #{thing}." } # => Proc object
+# puts my_proc                                          # => Proc object
+# puts my_proc.class                                    # => Proc
+# my_proc.call                                          # => This is a .
+# my_proc.call('cat')                                   # => This is a cat.
 
 # Observations:
 # Makes an object of the Proc class using the proc keyword (?). When the proc is
@@ -27,14 +27,14 @@ lambdas.
 # like lenient arity
 
 # Group 2
-# my_lambda = lambda { |thing| puts "This is a #{thing}." }
-# my_second_lambda = -> (thing) { puts "This is a #{thing}." }
-# puts my_lambda
-# puts my_second_lambda
-# puts my_lambda.class
-# my_lambda.call('dog')
-# my_lambda.call
-# my_third_lambda = Lambda.new { |thing| puts "This is a #{thing}." }
+# my_lambda = lambda { |thing| puts "This is a #{thing}." }    # => Proc object
+# my_second_lambda = -> (thing) { puts "This is a #{thing}." } # => Proc object
+# puts my_lambda                                               # => Proc object
+# puts my_second_lambda                                        # => Proc object
+# puts my_lambda.class                                         # => Proc
+# my_lambda.call('dog')                                        # => This is a dog.
+# my_lambda.call                                               # => error
+# my_third_lambda = Lambda.new { |thing| puts "This is a #{thing}." } # => error
 
 # Observations:
 # Uses the lambda keyword(?) to make an object of the Proc class. The last line
@@ -47,8 +47,8 @@ lambdas.
 #   yield
 # end
 
-# block_method_1('seal') { |seal| puts "This is a #{seal}."}
-# block_method_1('seal')
+# block_method_1('seal') { |seal| puts "This is a #{seal}."} # => This is a seal
+# block_method_1('seal')                                     # => error
 
 # Observations:
 # This defines a method which needs a block to run properly. Behaves as expected
@@ -62,11 +62,11 @@ def block_method_2(animal)
   yield(animal)
 end
 
-block_method_2('turtle') { |turtle| puts "This is a #{turtle}."}
-block_method_2('turtle') do |turtle, seal|
+block_method_2('turtle') { |turtle| puts "This is a #{turtle}."} # => This is a turtle
+block_method_2('turtle') do |turtle, seal|                       # => This is a turtle and a .
   puts "This is a #{turtle} and a #{seal}."
 end
-block_method_2('turtle') { puts "This is a #{animal}."}
+block_method_2('turtle') { puts "This is a #{animal}."}          # => error
 
 # Observations:
 # The first call is much like the first, but the argument passed to the method
@@ -77,3 +77,15 @@ block_method_2('turtle') { puts "This is a #{animal}."}
 # without throwing an error. In the third example however, it is apparent that a
 # block needs to be defined with a parameter for an argument passed to it to be
 # in scope.
+
+# Summary:
+# Blocks, procs and lambdas are three ways of creating closures in Ruby. Their
+# rules regarding arguments and parameters is called their arity. Blocks and
+# procs have more lenient arity than lambdas, as evidenced above. Procs can be
+# defined with a parameter, but if they do not receive an argument there is no
+# error. If the parameter is referenced, it just returns nil. This is in
+# contrast to lambdas, which will throw an error if they do not receive the
+# correct number of arguments. Blocks are similar to procs in that they can be
+# defined with a parameter, but if they receive no argument they run without
+# error. However, if a block receives an argument it must have a parameter
+# defined for it.
