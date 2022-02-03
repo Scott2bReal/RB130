@@ -63,4 +63,7 @@ Two final hints:
 =end
 require 'pry'
 
-factorial_iterator = Enumerator.new
+factorial_iterator = Enumerator.new do |y|
+end
+
+p factorial_iterator
