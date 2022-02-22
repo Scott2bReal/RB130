@@ -280,21 +280,73 @@
 
 6. What is a `.gemspec` file?
 
+  A `.gemspec` file provides information about a RubyGem. It is necessary if the
+  gem is to be released (published on a remote Gem libaray)
 
 7. How do the Ruby tools relate to one another?
+
+  Ruby version managers will manage gem and Ruby versions. Bundler uses the
+  `Gemfile` to know which versions of gems and ruby a project needs. Bundler
+  will generate a `Gemfile.lock`  that will ensure the proper dependencies are
+  in place. Rake is a gem that automates repetitive developer tasks.
 
 ## Regex
 
 1. What are patterns?
+
+  Patterns are the components of a regular expression. They are used to search
+  for certain characters or groups of characters within strings.
+
 2. How do you define a regex?
+
+  A regex can be defined by placing characters of interest with two `/` symbols.
+
 3. What is concatenation in regex? How is it achieved?
+
+  Concatentation is the combining of multiple patterns. It is achieved by, for
+  example, placing more than once character between `/`  symbols. The regex will
+  find those characters when they appear together in a string
+
 4. What is alternation in regex? How is it achieved?
+
+  Alternation is a simple way to match one of two or more patterns defined in
+  the regex. An example of alternation is: `/(ab|cd)/`
+
 5. What are a few examples of the most basic kind of regex patterns?
-6. What is a meta-character? How do you deal with them in regex? List a few exampled.
+
+  `/a/`
+  `/bat/`
+
+6. What is a meta-character? How do you deal with them in regex? List a few examples.
+  
+  A meta-character is a character which has a specific meaning to a regex
+  engine. They are dealt with by either using them as intended in your regex, or
+  by "escaping" them by using a \ symbol.
+
+  `/\./`
+  `/ca\*/`
+  
 7. What is a character class? How are they created? Give specific examples.
+
+  Character classes are regex which all certain characters to be matched without
+  needing them to be together. They are created by defining a list of characters
+  between `[]` symbols.
+  
 8. How are meta-characters different inside and outside of a character class?
+
+  Normal regex meta-characters can mostly be handled normally within character
+  classes. The list of meta-characters inside character classes is much smaller:
+  `^-/[]`
+
 9. What is an anchor? What, specifically, do you have to watch out for with anchors when it comes to Ruby regex?
+
+  Anchors are characters which will confine regex results to certain places in
+  the string (like the beginning and end of a line). When using the `\z` anchor,
+  it will match up to and including any `\n` characters at the end of a string.
+
 10. What is a quantifier? How do they operate? Give explicit examples.
+
+
 11. What is a capture group and how is it used?
 12. How do you test a string against a regex?
 13. How can you split strings into multiple items with a regex?
