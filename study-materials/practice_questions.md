@@ -251,7 +251,7 @@
 2. What is the RubyGems format for projects?
 
   
-3. What are Ruby Version Managers? Why do we need them? Give some exampled of
+3. What are Ruby Version Managers? Why do we need them? Give some examples of
    available Ruby Version Managers and what they can do for you.
 
   Ruby version managers are programs which will allow for the intallation and
@@ -260,11 +260,27 @@
   sometimes a Ruby program will use certain features of the language that
   operate in a certain way in one version, and that feature may change in
   upcoming version. Another reason to use a specific version of Ruby is to
-  maintain compatibility with any required gems
+  maintain compatibility with any required gems.
   
 4. What is Bundler? What does it do and why is it useful?
+
+  Bundler is a gem which manages dependencies for a ruby program. It helps to
+  organize all of the required files needed to run a Ruby program. It uses a
+  `Gemfile` to know which version of Ruby and gems to use. Using the command
+  `bundle install` will use the `Gemfile` to download and install the proper
+  version of Ruby and gems. This generates a `Gemfile.lock` file which displays
+  those files, as well as any files those depend on.
+
 5. What is Rake? What does it do and why is it useful?
+
+  Rake is a gem which automates common development tasks, such as incrementing
+  version numbers or making making commits to a git repo. It is useful because
+  it saves developer time and effort in completing these tasks, and the
+  automation guards against human error.
+
 6. What is a `.gemspec` file?
+
+
 7. How do the Ruby tools relate to one another?
 
 ## Regex
