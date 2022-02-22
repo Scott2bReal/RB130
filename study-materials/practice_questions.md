@@ -236,9 +236,32 @@
 
 ## Core Ruby Tools
 
-1. What are RubyGems? How are they used? Where can you find them? How do you manage them in your own environment? How do you include them in projects you create?
+1. What are RubyGems? How are they used? Where can you find them? How do you
+   manage them in your own environment? How do you include them in projects you
+   create?
+
+  RubyGems are packages of code which can be installed on your system for use in
+  Ruby programs or the terminal. Gems are found in the remote library, which by
+  default is the RubyGems Library found at https://rubygems.org/gems. Additional
+  remote libraries can be specified using the `gem install` command. Once a gem
+  is installed, it can be found in the 'local library'. The precise location on
+  your system can be found using the `gem env` command. They can be included in
+  your projects by using the `require` keyword.
+
 2. What is the RubyGems format for projects?
-3. What are Ruby Version Managers? Why do we need them? Give some exampled of available Ruby Version Managers and what they can do for you.
+
+  
+3. What are Ruby Version Managers? Why do we need them? Give some exampled of
+   available Ruby Version Managers and what they can do for you.
+
+  Ruby version managers are programs which will allow for the intallation and
+  use of multiple different versions of Ruby on one system. `RVM` and `rbenv`
+  are two of the most popular version managers for Ruby. We need them because
+  sometimes a Ruby program will use certain features of the language that
+  operate in a certain way in one version, and that feature may change in
+  upcoming version. Another reason to use a specific version of Ruby is to
+  maintain compatibility with any required gems
+  
 4. What is Bundler? What does it do and why is it useful?
 5. What is Rake? What does it do and why is it useful?
 6. What is a `.gemspec` file?
