@@ -3,18 +3,16 @@
 
 items = ['apples', 'corn', 'cabbage', 'wheat']
 
-# Original
 # def gather(items)
 #   puts "Let's start gathering food."
 #   puts "#{items.join(', ')}"
 #   puts "Nice selection of food we have gathered!"
 # end
 
-# Solution
 def gather(items)
-  puts "Let's start gathering food"
-  puts yield(items) if block_given?
+  puts "Let's start gathering food."
+  yield(items)
   puts "Nice selection of food we have gathered!"
 end
 
-gather(items) { |items| items.join(', ') }
+gather(items) { |items| puts "#{items.join(', ')}" }

@@ -6,16 +6,11 @@ require 'stringio'
 require_relative 'transaction'
 
 class TransactionTest < Minitest::Test
-  def setup
-    @transaction = Transaction.new(10)
-  end
-
-  def test_prompt_for_payment
+  def test_transaction_prompts_for_payment
+    transaction = Transaction.new(10)
     input = StringIO.new("10\n")
-    output = StringIO.new("")
-    # incorrect_input = StringIO.new("5\n")
-    @transaction.prompt_for_payment(input: input, output: output)
+    transaction.prompt_for_payment(input: input, output: StringIO.new)
 
-    assert_equal(@transaction.amount_paid, 10)
+    assert_equal(transaction.item_cost, transaction.amount_paid)
   end
 end

@@ -1,4 +1,5 @@
 # Given this code:
+
 items = ['apples', 'corn', 'cabbage', 'wheat']
 
 def gather(items)
@@ -11,21 +12,25 @@ end
 # corresponding output shown in numbers 1-4 listed below:
 
 # 1)
-gather(items) do |*produce, wheat|
-  puts "#{produce.join(', ')}"
-  puts wheat
+
+gather(items) do |*fruit_and_veg, grain|
+  puts "#{fruit_and_veg.join(', ')}"
+  puts grain
 end
+
 # Let's start gathering food.
 # apples, corn, cabbage
 # wheat
 # We've finished gathering!
 
 # 2)
-gather(items) do |fruit, *veggies, wheat|
-  puts fruit
+
+gather(items) do |fruit, *veggies, grain|
+  puts "#{fruit}"
   puts "#{veggies.join(', ')}"
-  puts wheat
+  puts "#{grain}"
 end
+
 # Let's start gathering food.
 # apples
 # corn, cabbage
@@ -33,19 +38,24 @@ end
 # We've finished gathering!
 
 # 3)
+
 gather(items) do |apples, *everything_else|
-  puts apples
+  puts "#{apples}"
   puts "#{everything_else.join(', ')}"
 end
+
 # Let's start gathering food.
 # apples
 # corn, cabbage, wheat
 # We've finished gathering!
 
 # 4)
+
 gather(items) do |apples, corn, cabbage, wheat|
-  puts "#{apples}, #{corn}, #{cabbage}, #{wheat}"
+  puts "#{apples}, #{corn}, #{cabbage}, and #{wheat}"
 end
+
 # Let's start gathering food.
 # apples, corn, cabbage, and wheat
 # We've finished gathering!
+
